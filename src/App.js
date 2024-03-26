@@ -39,7 +39,7 @@ function App() {
       const bstr = evt.target.result;
       const wb = XLSX.read(bstr, { type: 'binary' });
 
-      // Reading IDs from the first sheet
+      // Reading IDs from the first sheet, skipping the first line
       const wsnameIds = wb.SheetNames[0];
       const wsIds = wb.Sheets[wsnameIds];
       const dataIds = XLSX.utils.sheet_to_json(wsIds, { header: 1 });

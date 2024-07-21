@@ -37,7 +37,7 @@ function FormComponent() {
         const [wb1, wb2, wb3] = await Promise.all([
           fetchExcelData('./faculty.xlsx'),
           fetchExcelData('./rank.xlsx'),
-          fetchExcelData('./reasons.xlsx')
+          fetchExcelData('./committee.xlsx')
         ]);
 
         const processWorkbook = (workbook) => {

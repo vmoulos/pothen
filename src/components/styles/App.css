@@ -1,0 +1,91 @@
+/* App.css */
+.App {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 5px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+select {
+  white-space: pre-wrap; /* Ensure wrapping of options */
+  overflow: visible; /* Hide overflow text */
+  text-overflow: clip; /* Ellipsis for overflow text */
+  word-wrap: break-word; /* Break long words */
+}
+
+option {
+  white-space: pre-wrap; /* Ensure wrapping of options */
+  word-wrap: break-word; /* Break long words */
+}
+
+input[type="radio"] {
+  width: auto;
+  margin-right: 5px;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+}
+.radio-group div {
+  margin-right: 20px;
+}
+
+.faq-link {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.faq-link a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.faq-link a:hover {
+  text-decoration: underline;
+}
+
+.note {
+  background-color: #fffbcc;
+  border-left: 4px solid #ffeb3b;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}

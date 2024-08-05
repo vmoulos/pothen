@@ -12,23 +12,35 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Create a MariaDB connection pool
 const pool = mariadb.createPool({
-  host: '147.102.74.58', 
-  user: 'pothen', 
-  password: 'MyPassPothen',
+  host: 'localhost', 
+  user: 'root', 
+  password: 'test1234',
   database: 'pothen',
   connectionLimit: 5
 });
+// Function to validate AFM
+const validateAFM = (afm) => {
+  const afmRegex = /^[1-9][0-9]{8}$/; // AFM should be 9 digits and not start with 0
+  return afmRegex.test(afm);
+};
+
+
 
 // Endpoint to handle form submission
 app.post('/submit-form', async (req, res) => {
   const formData = req.body;
+  // Validate AFM
+  if (!validateAFM(formData["Α.Φ.Μ."])) {
+    return res.status(200).json({ success: false, error: 'Μη έγκυρο ΑΦΜ.' });
+  }
+
   try {
     const connection = await pool.getConnection();
     const query = `
-    INSERT INTO form_data (
-      afm, adt_agm, surname, name, patronym, idiotita, acquisition_date, loss_date, org_unit, new_org_unit, grade, committee_name, decision_protocol_number, decision_date, submitted_previous_year
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `;
+      INSERT INTO pothen (
+        afm, adt_agm, surname, name, patronym, idiotita, acquisition_date, loss_date, expiration_date, org_unit, new_org_unit, grade, committee_name, decision_protocol_number, decision_date, submitted_previous_year
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, DATE_ADD(?, INTERVAL 2 YEAR), ?, ?, ?, ?, ?, ?, ?)
+    `;
     const values = [
         formData["Α.Φ.Μ."], 
         formData["Α.Δ.Τ - Α.Γ.Μ"], 
@@ -38,6 +50,7 @@ app.post('/submit-form', async (req, res) => {
         formData["Ιδιότητα"], 
         formData["Ημ/νία Απόκτησης Ιδιότητας"], 
         formData["Ημ/νία Απώλειας Ιδιότητας"], 
+        formData["Ημ/νία Απόκτησης Ιδιότητας"],
         formData["Οργανική Μονάδα"], 
         formData["Νέα Οργανική Μονάδα"], 
         formData["Βαθμός"], 
@@ -48,7 +61,7 @@ app.post('/submit-form', async (req, res) => {
     ];
     await connection.query(query, values);
     connection.release();
-    res.status(200).send('Form data submitted successfully');
+    return res.status(200).json({ success: true , error: '' });
   } catch (err) {
     console.error(err);
     res.status(500).send('Error submitting form data');

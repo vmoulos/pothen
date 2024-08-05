@@ -22,6 +22,7 @@ function FormComponent() {
   const [optionsIdiotita, setOptionsIdiotita] = useState([]);
   const [optionsVathmos, setOptionsVathmos] = useState([]);
   const [optionsOnomaEpitropis, setOptionsOnomaEpitropis] = useState([]);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,7 +81,7 @@ function FormComponent() {
       ...formData,
       "Ημ/νία Έκδοσης Απόφασης": formData["Ημ/νία Έκδοσης Απόφασης"] ? format(formData["Ημ/νία Έκδοσης Απόφασης"], 'yyyy-MM-dd') : '',
       "Ημ/νία Απόκτησης Ιδιότητας": formData["Ημ/νία Απόκτησης Ιδιότητας"] ? format(formData["Ημ/νία Απόκτησης Ιδιότητας"], 'yyyy-MM-dd') : '',
-      "Ημ/νία Απώλειας Ιδιότητας": formData["Ημ/νία Απώλειας Ιδιότητας"] ? format(formData["Ημ/νία Απώλειας Ιδιότητας"], 'yyyy-MM-dd') : '',
+      "Ημ/νία Απώλειας Ιδιότητας": formData["Ημ/νία Απώλειας Ιδιότητας"] ? format(formData["Ημ/νία Απώλειας Ιδιότητας"], 'yyyy-MM-dd') : null,
       "Έχετε υποβάλει το προηγούμενο έτος πόθεν στη Γ ομάδα ελέγχου (ετήσιας)": formData["Έχετε υποβάλει το προηγούμενο έτος πόθεν στη Γ ομάδα ελέγχου (ετήσιας)"] === 'Yes'
     };
     try {
@@ -92,17 +93,21 @@ function FormComponent() {
         body: JSON.stringify(formattedFormData)
       });
       const result = await response.json();
-      if (response.ok) {
-        alert('Data inserted successfully');
+      if (!result.success) {
+        // Handle the error
+        setMessage({ type: 'error', text: result.error });
       } else {
-        alert('Error inserting data: ' + result.message);
+        // Handle success
+        setMessage({ type: 'success', text: 'Τα στοιχεία καταχωρήθηκαν επιτυχώς.' });
       }
     } catch (error) {
-      console.error('Error:', error);
+      // Handle network or other errors
+      setMessage({ type: 'error', text: 'An unexpected error occurred. Please try again.' });
     }
   };
 
   return (
+  <div>
     <form onSubmit={handleSubmit}>
       <TextInput name="Α.Φ.Μ." value={formData["Α.Φ.Μ."]} onChange={handleChange} required />
       <TextInput name="Α.Δ.Τ - Α.Γ.Μ" value={formData["Α.Δ.Τ - Α.Γ.Μ"]} onChange={handleChange} required />
@@ -111,7 +116,7 @@ function FormComponent() {
       <TextInput name="Πατρώνυμο" value={formData["Πατρώνυμο"]} onChange={handleChange} required />
       <SelectInput name="Ιδιότητα" value={formData["Ιδιότητα"]} onChange={handleChange} options={optionsIdiotita} required />
       <DateInput name="Ημ/νία Απόκτησης Ιδιότητας" selected={formData["Ημ/νία Απόκτησης Ιδιότητας"]} onChange={handleDateChange} required />
-      <DateInput name="Ημ/νία Απώλειας Ιδιότητας" selected={formData["Ημ/νία Απώλειας Ιδιότητας"]} onChange={handleDateChange} required />
+      <DateInput name="Ημ/νία Απώλειας Ιδιότητας" selected={formData["Ημ/νία Απώλειας Ιδιότητας"]} onChange={handleDateChange}s />
       <TextInput name="Οργανική Μονάδα" value={formData["Οργανική Μονάδα"]} onChange={handleChange} required />
       <TextInput name="Νέα Οργανική Μονάδα" value={formData["Νέα Οργανική Μονάδα"]} onChange={handleChange} required />
       <SelectInput name="Βαθμός" value={formData["Βαθμός"]} onChange={handleChange} options={optionsVathmos} required />
@@ -121,8 +126,14 @@ function FormComponent() {
       <RadioInput name="Έχετε υποβάλει το προηγούμενο έτος πόθεν στη Γ ομάδα ελέγχου (ετήσιας)" value={formData["Έχετε υποβάλει το προηγούμενο έτος πόθεν στη Γ ομάδα ελέγχου (ετήσιας)"]} onChange={handleChange} required />
       <NoteInput />
       <FaqInput />
+      {message && (
+          <div className={message.type === 'error' ? 'error-message' : 'success-message'}>
+            {message.text}
+          </div>
+        )}
       <button type="submit">Κατάθεση</button>
     </form>
+  </div>
   );
 }
 

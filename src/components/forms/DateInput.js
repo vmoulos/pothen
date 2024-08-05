@@ -3,6 +3,9 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 function DateInput({ name, selected, onChange, required }) {
+  // Get today's date
+  const today = new Date();
+  
   return (
     <div className="form-group">
       <label htmlFor={name}>{name}:</label>
@@ -13,6 +16,7 @@ function DateInput({ name, selected, onChange, required }) {
         placeholderText="DD/MM/YYYY"
         className="form-control"
         required={required}
+        maxDate={today}
       />
     </div>
   );

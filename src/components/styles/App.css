@@ -5,6 +5,9 @@
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+.App-header {
+  text-align: center;
+}
 
 .form-group {
   margin-bottom: 5px;
@@ -88,4 +91,26 @@ button:hover {
   padding: 10px;
   margin-bottom: 20px;
   font-size: 14px;
+}
+
+.error-message {
+  color: red;
+  background-color: #f8d7da; /* Light red background */
+  border: 1px solid #f5c6cb; /* Slightly darker red border */
+  padding: 5px;              /* Reduce padding for a smaller message box */
+  margin-bottom: 10px;       /* Space below the error message */
+  border-radius: 4px;        /* Rounded corners */
+  font-size: 14px;           /* Smaller text size */
+  max-width: 100%;           /* Ensure it doesn't exceed container width */
+}
+
+.success-message {
+  color: green;
+  background-color: #d4edda; /* Light green background */
+  border: 1px solid #c3e6cb; /* Slightly darker green border */
+  padding: 5px;              /* Match padding with error message */
+  margin-bottom: 10px;       /* Space below the message */
+  border-radius: 4px;        /* Rounded corners */
+  font-size: 14px;           /* Match text size with error message */
+  max-width: 100%;           /* Ensure it doesn't exceed container width */
 }

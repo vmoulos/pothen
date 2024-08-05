@@ -12,10 +12,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Create a MariaDB connection pool
 const pool = mariadb.createPool({
-  host: '147.102.74.58', 
-  user: 'pothen', 
-  password: 'MyPassPothen',
-  database: 'pothen',
+  host: '***', 
+  user: '**', 
+  password: '***',
+  database: '**',
   connectionLimit: 5
 });
 

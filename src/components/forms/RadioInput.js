@@ -9,23 +9,23 @@ function RadioInput({ name, value, onChange, required }) {
           <input
             type="radio"
             name={name}
-            value="Yes"
-            checked={value === 'Yes'}
+            value="Ναι"
+            checked={value === 'Ναι'}
             onChange={onChange}
             required={required}
           />
-          Yes
+          Ναι
         </label>
         <label>
           <input
             type="radio"
             name={name}
-            value="No"
-            checked={value === 'No'}
+            value="Οχι"
+            checked={value === 'Οχι'}
             onChange={onChange}
             required={required}
           />
-          No
+          Οχι
         </label>
       </div>
     </div>

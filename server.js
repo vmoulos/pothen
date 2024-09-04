@@ -12,10 +12,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Create a MariaDB connection pool
 const pool = mariadb.createPool({
-  host: '***', 
-  user: '**', 
-  password: '***',
-  database: '**',
+  host: '', 
+  user: '',
+  password: '',
+  database: '',
   connectionLimit: 5
 });
 // Function to validate AFM
@@ -30,34 +30,34 @@ const validateAFM = (afm) => {
 app.post('/submit-form', async (req, res) => {
   const formData = req.body;
   // Validate AFM
-  if (!validateAFM(formData["Α.Φ.Μ."])) {
+  if (!validateAFM(formData["afm"])) {
     return res.status(200).json({ success: false, error: 'Μη έγκυρο ΑΦΜ.' });
   }
 
   try {
     const connection = await pool.getConnection();
     const query = `
-      INSERT INTO pothen (
+      INSERT INTO form_data (
         afm, adt_agm, surname, name, patronym, idiotita, acquisition_date, loss_date, expiration_date, org_unit, new_org_unit, grade, committee_name, decision_protocol_number, decision_date, submitted_previous_year
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, DATE_ADD(?, INTERVAL 2 YEAR), ?, ?, ?, ?, ?, ?, ?)
     `;
     const values = [
-        formData["Α.Φ.Μ."], 
-        formData["Α.Δ.Τ - Α.Γ.Μ"], 
-        formData["Επώνυμο"], 
-        formData["Όνομα"], 
-        formData["Πατρώνυμο"], 
-        formData["Ιδιότητα"], 
-        formData["Ημ/νία Απόκτησης Ιδιότητας"], 
-        formData["Ημ/νία Απώλειας Ιδιότητας"], 
-        formData["Ημ/νία Απόκτησης Ιδιότητας"],
-        formData["Οργανική Μονάδα"], 
-        formData["Νέα Οργανική Μονάδα"], 
-        formData["Βαθμός"], 
-        formData["Όνομα Επιτροπής"], 
-        formData["Αριθμός πρωτοκόλλου απόφασης"], 
-        formData["Ημ/νία Έκδοσης Απόφασης"], 
-        formData["Έχετε υποβάλει το προηγούμενο έτος πόθεν στη Γ ομάδα ελέγχου (ετήσιας)"] === 'Yes'
+        formData["afm"], 
+        formData["adt_agm"], 
+        formData["surname"], 
+        formData["name"], 
+        formData["patronym"], 
+        formData["idiotita"], 
+        formData["acquisition_date"], 
+        formData["loss_date"], 
+        formData["expiration_date"],
+        formData["org_unit"], 
+        formData["new_org_unit"], 
+        formData["grade"], 
+        formData["committee_name"], 
+        formData["decision_protocol_number"], 
+        formData["decision_date"], 
+        formData["submitted_previous_year"] === 'Yes'
     ];
     await connection.query(query, values);
     connection.release();

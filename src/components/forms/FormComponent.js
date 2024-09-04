@@ -75,15 +75,43 @@ function FormComponent() {
     }));
   };
 
+  const keyMapping = {
+    "Α.Φ.Μ.": "afm",
+    "Α.Δ.Τ - Α.Γ.Μ": "adt_agm",
+    "Επώνυμο": "surname",
+    "Όνομα": "name",
+    "Πατρώνυμο": "patronym",
+    "Ιδιότητα": "idiotita",
+    "Ημ/νία Απόκτησης Ιδιότητας": "acquisition_date",
+    "Ημ/νία Απώλειας Ιδιότητας": "loss_date",
+    "Οργανική Μονάδα": "org_unit",
+    "Νέα Οργανική Μονάδα": "new_org_unit",
+    "Βαθμός": "grade",
+    "Όνομα Επιτροπής": "committee_name",
+    "Αριθμός πρωτοκόλλου απόφασης": "decision_protocol_number",
+    "Ημ/νία Έκδοσης Απόφασης": "decision_date",
+    "Έχετε υποβάλει το προηγούμενο έτος πόθεν στη Γ ομάδα ελέγχου (ετήσιας)": "submitted_previous_year",
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formattedFormData = {
-      ...formData,
-      "Ημ/νία Έκδοσης Απόφασης": formData["Ημ/νία Έκδοσης Απόφασης"] ? format(formData["Ημ/νία Έκδοσης Απόφασης"], 'yyyy-MM-dd') : '',
-      "Ημ/νία Απόκτησης Ιδιότητας": formData["Ημ/νία Απόκτησης Ιδιότητας"] ? format(formData["Ημ/νία Απόκτησης Ιδιότητας"], 'yyyy-MM-dd') : '',
-      "Ημ/νία Απώλειας Ιδιότητας": formData["Ημ/νία Απώλειας Ιδιότητας"] ? format(formData["Ημ/νία Απώλειας Ιδιότητας"], 'yyyy-MM-dd') : null,
-      "Έχετε υποβάλει το προηγούμενο έτος πόθεν στη Γ ομάδα ελέγχου (ετήσιας)": formData["Έχετε υποβάλει το προηγούμενο έτος πόθεν στη Γ ομάδα ελέγχου (ετήσιας)"] === 'Yes'
-    };
+    const formattedFormData = Object.keys(formData).reduce((acc, key) => {
+      const newKey = keyMapping[key];
+      acc[newKey] = formData[key];
+      return acc;
+    }, {});
+    // Additional formatting
+    formattedFormData["acquisition_date"] = formData["Ημ/νία Απόκτησης Ιδιότητας"] 
+    ? format(formData["Ημ/νία Απόκτησης Ιδιότητας"], 'yyyy-MM-dd') 
+    : '';
+    formattedFormData["loss_date"] = formData["Ημ/νία Απώλειας Ιδιότητας"] 
+    ? format(formData["Ημ/νία Απώλειας Ιδιότητας"], 'yyyy-MM-dd') 
+    : null;
+    formattedFormData["decision_date"] = formData["Ημ/νία Έκδοσης Απόφασης"] 
+    ? format(formData["Ημ/νία Έκδοσης Απόφασης"], 'yyyy-MM-dd') 
+    : '';
+    formattedFormData["submitted_previous_year"] = formData["Έχετε υποβάλει το προηγούμενο έτος πόθεν στη Γ ομάδα ελέγχου (ετήσιας)"] === 'Yes';
+
     try {
       const response = await fetch('http://localhost:3002/submit-form', {
         method: 'POST',

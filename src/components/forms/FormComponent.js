@@ -41,14 +41,21 @@ function FormComponent() {
           fetchExcelData('./committee.xlsx')
         ]);
 
-        const processWorkbook = (workbook) => {
+        const processIdiotita = (workbook) => {
           const wsname = workbook.SheetNames[0];
           const ws = workbook.Sheets[wsname];
           const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
           return data.slice(1).map(row => `${row[0]} ${row[1]}`).filter(option => option.trim() !== '');
         };
 
-        setOptionsIdiotita(processWorkbook(wb1));
+        const processWorkbook = (workbook) => {
+          const wsname = workbook.SheetNames[0];
+          const ws = workbook.Sheets[wsname];
+          const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+          return data.slice(1).map(row => `${row[1]}`).filter(option => option.trim() !== '');
+        };
+
+        setOptionsIdiotita(processIdiotita(wb1));
         setOptionsVathmos(processWorkbook(wb2));
         setOptionsOnomaEpitropis(processWorkbook(wb3));
 

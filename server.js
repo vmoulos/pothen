@@ -12,10 +12,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Create a MariaDB connection pool
 const pool = mariadb.createPool({
-  host: '', 
-  user: '',
-  password: '',
-  database: '',
+  host: '147.102.74.58',
+  user: 'root',
+  password: 'MariaPothen2024',
+  database: 'pothen',
   connectionLimit: 5
 });
 // Function to validate AFM

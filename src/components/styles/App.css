@@ -1,21 +1,36 @@
 /* App.css */
 .App {
-  max-width: 600px;
+  max-width: 800px; /* Adjusted width for better layout */
   margin: auto;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #f0f0f0; /* Slightly darker grey background */
 }
+
+body {
+  background-color: #f0f0f0; /* Slightly darker grey background for the sides */
+}
+
 .App-header {
   text-align: center;
 }
 
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 10px; /* Space between items */
+}
+
 .form-group {
-  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.full-width {
+  grid-column: span 2; /* Span both columns */
 }
 
 label {
-  display: block;
-  margin-bottom: 5px;
   font-weight: bold;
 }
 
@@ -29,26 +44,8 @@ input, select {
   border-radius: 4px;
 }
 
-select {
-  white-space: pre-wrap; /* Ensure wrapping of options */
-  overflow: visible; /* Hide overflow text */
-  text-overflow: clip; /* Ellipsis for overflow text */
-  word-wrap: break-word; /* Break long words */
-}
-
-option {
-  white-space: pre-wrap; /* Ensure wrapping of options */
-  word-wrap: break-word; /* Break long words */
-}
-
-input[type="radio"] {
-  width: auto;
-  margin-right: 5px;
-}
-
 button {
-  display: block;
-  width: 100%;
+  grid-column: span 2; /* Span both columns */
   padding: 10px;
   background-color: #007bff;
   color: white;
@@ -60,57 +57,14 @@ button:hover {
   background-color: #0056b3;
 }
 
-.radio-group {
-  display: flex;
-  align-items: center;
-}
-.radio-group div {
-  margin-right: 20px;
-}
-
-.faq-link {
-  display: block;
-  margin-top: 20px;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.faq-link a {
-  color: #007bff;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.faq-link a:hover {
-  text-decoration: underline;
-}
-
-.note {
-  background-color: #fffbcc;
-  border-left: 4px solid #ffeb3b;
-  padding: 10px;
-  margin-bottom: 20px;
+.error-message, .success-message {
+  grid-column: span 2; /* Span both columns */
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: 4px;
   font-size: 14px;
 }
 
-.error-message {
-  color: red;
-  background-color: #f8d7da; /* Light red background */
-  border: 1px solid #f5c6cb; /* Slightly darker red border */
-  padding: 5px;              /* Reduce padding for a smaller message box */
-  margin-bottom: 10px;       /* Space below the error message */
-  border-radius: 4px;        /* Rounded corners */
-  font-size: 14px;           /* Smaller text size */
-  max-width: 100%;           /* Ensure it doesn't exceed container width */
-}
-
-.success-message {
-  color: green;
-  background-color: #d4edda; /* Light green background */
-  border: 1px solid #c3e6cb; /* Slightly darker green border */
-  padding: 5px;              /* Match padding with error message */
-  margin-bottom: 10px;       /* Space below the message */
-  border-radius: 4px;        /* Rounded corners */
-  font-size: 14px;           /* Match text size with error message */
-  max-width: 100%;           /* Ensure it doesn't exceed container width */
+.note, .faq-link {
+  grid-column: span 2; /* Span both columns */
 }

@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import FAQPage from './forms/FAQPage'; // Import the new FAQPage component
 import ministryImage from '../assets/ministry.jpg';
 import pothenImage from '../assets/pothen_without.png';
+import HomePage from './forms/HomePageComponent';
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
         <main>
           <Routes>
             <Route path="/faq" element={<FAQPage/>}/>
-            <Route path="/" element={<FormComponent/>}/>
+            <Route path="/" element={<HomePage/>}/>
+            <Route path="/submit" element={<FormComponent/>}/>
             {/* Add more routes as needed */}
           </Routes>
         </main>
